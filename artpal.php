@@ -287,9 +287,9 @@ function ds_ap_generatepaypalbutton ( $selleremail, $itemname, $itemnumber, $pri
 		. '<input type="hidden" name="business" value="' . $selleremail . '">' // email account to send money to
 		. '<input type="hidden" name="item_name" value="' . $itemname . '">' // name of item to appear at checkout
 		. '<input type="hidden" name="item_number" value="' . $itemnumber . '">' // item number
-	//	. '<input type="hidden" name="invoice" value="' . $itemnumber . '">' // invoice # mandated unique by paypal
-																			// be careful! if you uncomment the above line, you can't "reset" sold 
-																			// paintings to make them available again!
+//	. '<input type="hidden" name="invoice" value="' . $itemnumber . '">' // invoice # mandated unique by paypal
+// be careful! if you uncomment the above line, you can't "reset" sold 
+// paintings to make them available again!
 		. '<input type="hidden" name="amount" value="' . $price . '">' // price of item
 		. '<input type="hidden" name="tax" value="' . round(($price * (get_option ( 'ds_ap_taxrate' )/100)),2) . '">' // price of item
 		. '<input type="hidden" name="currency_code" value="' . get_option('ds_ap_currencycode4217') . '">' // us dollars only
@@ -298,7 +298,7 @@ function ds_ap_generatepaypalbutton ( $selleremail, $itemname, $itemnumber, $pri
 		. '<input type="hidden" name="notify_url" value="' . ipn_page_url() . '">'
 		. '<input type="hidden" name="return" value="' . get_option ( 'ds_ap_thankyoupage' ) . '">'
 	 	. '<input type="hidden" name="cancel_return" value="' . get_option ( 'ds_ap_cancelpage' ) . '">'
-		. '<input type="hidden" name="image_url" value="' . get_option ( 'ds_ap_vendorlogo' ) . '">'
+		. '<!--input type="hidden" name="image_url" value="' . get_option ( 'ds_ap_vendorlogo' ) . '"-->'
 		. '<input type="image" name="add" src="' . get_option ( 'ds_ap_paypalbutton' ) . '">' // button graphic
 		. '</form>';
 	}

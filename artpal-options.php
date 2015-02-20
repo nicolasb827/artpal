@@ -145,7 +145,7 @@ for ( $i = 0; $i < $category_count; $i++ )
 </p>
 
 <p>
-	Vendor logo on Paypal payment page (Full URI):
+	Vendor logo on Paypal payment page (Full URI, size 150x150):
 	<br />
 	<input type="text" name="vendorlogo" size="100" value="<?php echo stripslashes ( get_option ( 'ds_ap_vendorlogo' ) ); ?>" />
 </p>

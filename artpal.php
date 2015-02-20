@@ -95,7 +95,8 @@ $ds_ap_options_names = array (
 	'ds_ap_textifsaledisabled',
 	'ds_ap_currencycode4217',
 	'ds_ap_currencysymbol',
-	'ds_ap_usesandbox'
+	'ds_ap_usesandbox',
+	'ds_ap_vendorlogo',
 	);
 
 global $ds_ap_options_vals;
@@ -116,7 +117,9 @@ $ds_ap_options_vals = array (
 	stripslashes('Sorry, this item is not currently available for sale. Please check back later.'),
 	$artpal_currencycodes[15][1], // USD
 	$artpal_currencycodes[15][1], // $
-	'0'
+	'0',
+	'',
+	'',
 );
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -257,23 +260,29 @@ function ds_ap_generatepaypalbutton ( $selleremail, $itemname, $itemnumber, $pri
 	if ( $regularprice == $price )
 		$regularprice = NULL;
 	$pretext = htmlspecialchars_decode ( stripslashes ( get_option ( 'ds_ap_prebuttontext' ) ) );
-	$pricetext = $cSymbol . $price;
+	$pricetext = $price . " " . $cSymbol;
 	// If regular price isn't the same as the current price, ...
 	if ( $regularprice != NULL ) {
 		// ... show the savings!
 		$pricetext = '<del>' . $cSymbol . $regularprice . '</del> ' . $pricetext;
 	}
-	$pretext = str_replace ( '_PRICE_', $pricetext, $pretext );
+	if (get_option ( 'ds_ap_taxrate' ) != "") {
+		$tax = round(($price * (get_option ( 'ds_ap_taxrate' )/100)),2);
+		$pricettc = $price + $tax . " " . $cSymbol;
+		$pretext = str_replace ( '_PRICE_', $pricettc ." TTC (" . $price . " " . $cSymbol . " HT)", $pretext );
+	} else {
+		$pretext = str_replace ( '_PRICE_', $pricetext . " TTC", $pretext );
+	}
 	$shippingtext = $shipping;
 	if ( $shippingtext == 0 )
 		$shippingtext = 'free';
 	else
-		$shippingtext = $cSymbol . $shippingtext;
-	$pretext = str_replace ( '_SHIPPING_', $shippingtext, $pretext );
+		$shippingtext =  $shippingtext . " " . $cSymbol;
+	$pretext = str_replace ( '_SHIPPING_', $shippingtext , $pretext );
 	$button_html = $pretext . '<br />';
 	// Don't create the PayPal button if ecommerce is disabled.
 	if ( ! get_option ( 'ds_ap_disableecommerce' ) ) {
-		$button_html .= '<form method="post" action="https://' . get_paypal_domain() . '/cgi-bin/webscr" target="paypal">'
+		$button_html .= '<form method="post" action="https://' . get_paypal_domain() . '/cgi-bin/webscr" target="_self">'
 		. '<input type="hidden" name="cmd" value="_xclick">'
 		. '<input type="hidden" name="business" value="' . $selleremail . '">' // email account to send money to
 		. '<input type="hidden" name="item_name" value="' . $itemname . '">' // name of item to appear at checkout
@@ -289,6 +298,7 @@ function ds_ap_generatepaypalbutton ( $selleremail, $itemname, $itemnumber, $pri
 		. '<input type="hidden" name="notify_url" value="' . ipn_page_url() . '">'
 		. '<input type="hidden" name="return" value="' . get_option ( 'ds_ap_thankyoupage' ) . '">'
 	 	. '<input type="hidden" name="cancel_return" value="' . get_option ( 'ds_ap_cancelpage' ) . '">'
+		. '<input type="hidden" name="image_url" value="' . get_option ( 'ds_ap_vendorlogo' ) . '">'
 		. '<input type="image" name="add" src="' . get_option ( 'ds_ap_paypalbutton' ) . '">' // button graphic
 		. '</form>';
 	}

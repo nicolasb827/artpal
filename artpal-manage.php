@@ -6,6 +6,8 @@ desc:	Manage Items page for ArtPal Wordpress Plugin
 
 author:	Robby Grossman <http://freerobby.com>
 
+contributor: Nicolas Belan <https://github.com/nicolasb827/artpal>
+
 */
 ?>
 <?php

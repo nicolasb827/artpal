@@ -23,10 +23,12 @@ foreach ($_POST as $key => $value) {
  }
 }
 // post back to PayPal system to validate
-$header .= "POST /cgi-bin/webscr HTTP/1.0\r\n";
+$header .= "POST /cgi-bin/webscr HTTP/1.1\r\n";
 $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
+$header .= "Host: " . get_paypal_domain() . "\r\n";
+$header .= "Date: " . gmdate('D, d M Y H:i:s T', time()) . "\r\n"; 
 $header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
-$fp = fsockopen (get_paypal_domain(), 80, $errno, $errstr, 30);
+$fp = fsockopen ("ssl://" . get_paypal_domain(), 443, $errno, $errstr, 30);
 // assign posted variables to local variables
 $item_name = $_POST['item_name'];
 $item_number = $_POST['item_number'];
@@ -45,12 +47,15 @@ if (!$fp) {
 }
 else {
  if ($logging) {
-   fwrite ( $fh, "NO HTTP ERROR\n" );
+   fwrite ( $fh, "NO HTTP ERROR\nREQUEST:\n$header\n\n$req\n" );
  }
  fputs ($fp, $header . $req);
  while (!feof($fp)) {
    $res = fgets ($fp, 1024);
-   if (strcmp ($res, "VERIFIED") == 0) {
+   if ($logging) {
+      fwrite ( $fh, "==> $res" );
+   }
+   if (strncmp ($res, "VERIFIED", 8) == 0) {
      if ($logging) {
        fwrite ( $fh, "VERIFIED = 0\n" );
      }

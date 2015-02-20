@@ -6,6 +6,7 @@ desc:	Options page for ArtPal Wordpress Plugin
 
 author:	Robby Grossman
 
+contributor: Nicolas Belan <https://github.com/nicolasb827/artpal>
 */
 ?>
 <?php
@@ -17,6 +18,7 @@ if ( isset ( $_POST [ 'submitted' ] ) ) {
 	update_option ( 'ds_ap_paypalemail', htmlspecialchars ( $_POST [ 'paypalemail' ], ENT_QUOTES ) );
 	update_option ( 'ds_ap_soldcode', htmlspecialchars ( $_POST [ 'soldcode' ], ENT_QUOTES ) );
 	update_option ( 'ds_ap_prebuttontext', htmlspecialchars ( $_POST [ 'prebuttontext' ] ) );
+	update_option ( 'ds_ap_vendorlogo', htmlspecialchars ( $_POST [ 'vendorlogo' ] ) );
 	update_option ( 'ds_ap_thankyoupage', htmlspecialchars ( $_POST [ 'thankyoupage' ], ENT_QUOTES ) );
 	update_option ( 'ds_ap_cancelpage', htmlspecialchars ( $_POST [ 'cancelpage' ], ENT_QUOTES ) );
 	update_option ( 'ds_ap_paypalbutton', htmlspecialchars ( $_POST [ 'paypalbutton' ], ENT_QUOTES ) );
@@ -140,6 +142,12 @@ for ( $i = 0; $i < $category_count; $i++ )
 	Static text to use in the event that you fail to specify pricing information for an item:
 	<br />
 	<input type="text" name="textifunknownmetadata" size="100" value="<?php echo stripslashes ( get_option ( 'ds_ap_textifunknownmetadata' ) ); ?>" />
+</p>
+
+<p>
+	Vendor logo on Paypal payment page (Full URI):
+	<br />
+	<input type="text" name="vendorlogo" size="100" value="<?php echo stripslashes ( get_option ( 'ds_ap_vendorlogo' ) ); ?>" />
 </p>
 
 <p>

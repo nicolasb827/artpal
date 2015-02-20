@@ -1,10 +1,9 @@
 === ArtPal ===
-Contributors: freerobby
-Donate link: http://freerobby.com/donate
+Contributors: freerobby, nicolasb827
 Tags: paypal, ecommerce, artists, sell
-Requires at least: 2.5
-Tested up to: 2.9.1
-Stable tag: 1.4
+Requires at least: 4.0
+Tested up to: 4.1.1
+Stable tag: 1.5
 
 ArtPal is a free (GPL) Wordpress plugin, originally written for Artists, to seemlessly integrate PayPal with their Wordpress blogs so that they can sell their work online.
 == Description ==
@@ -17,13 +16,12 @@ ArtPal's most important features are:
 
 * Easy PayPal integration - all you need to supply is your PayPal email address!
 * Real-time sales updates - as soon as your item sells, ArtPal will disable it from being sold. You'll never worry about your item selling twice!
-* Professionally supported - businesses mean business. Digital Sublimity provides commercial support, so you can be rest assured that your critical application will stay up and running when you need it.
 
 == Installation ==
 
 1. Upload ./artpal directory to wp-content/plugins directory.
 2. Activate the plugin through the 'Plugins' menu in Wordpress.
-3. Configure as specified at [http://freerobby.com/artpal](http://freerobby.com/artpal).
+3. Configure as specified
 
 == Frequently Asked Questions ==
 
